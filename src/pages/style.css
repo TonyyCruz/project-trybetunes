@@ -7,3 +7,35 @@
 .load {
   text-align: center;
 }
+
+.album-contain {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 50px;
+}
+
+.album-box {
+  background-color: aliceblue;
+  border: 2px solid green;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: small;
+  margin: 10px;
+  max-height: 250px;
+  padding: 10px;
+  width: 150px;
+}
+
+.album-view {
+  background-color: rgb(175, 249, 192);
+  border: 2px solid rgb(139, 139, 139);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  font-size: medium;
+  height: 500px;
+  margin: 10px auto;
+  padding: 10px;
+  width: 350px;
+}
