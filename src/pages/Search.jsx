@@ -36,7 +36,6 @@ class Search extends Component {
     this.setState({ findArtist: '' });// ultima <=
     this.setState({ findButtonDisable: true });
     this.setState({ isLoading: false });
-    console.log(artists);
   }
 
   //  -------------------------------------------------------------------------------
