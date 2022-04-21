@@ -6,13 +6,16 @@ import getMusics from '../services/musicsAPI';
 import Load from './Load';
 import './style.css';
 import MusicCard from '../components/MusicCard';
+import { addSong } from '../services/favoriteSongsAPI';
 
 class Album extends Component {
   constructor() {
     super();
     this.state = {
-      albums: '',
+      musics: '',
       display: '',
+      // favorits: '',
+      isLoading: false,
     };
   }
 
@@ -20,22 +23,28 @@ class Album extends Component {
     const { match: { params: { id } } } = this.props;
 
     const allMusics = await getMusics(id);
-    const albums = allMusics.filter((m, i) => i > 0);
+    const musics = allMusics.filter((m, i) => i > 0);
 
-    this.setState({ albums });
+    this.setState({ musics });
     this.setState({ display: allMusics[0] });
-    console.log('music', albums);
+    console.log('music', musics);
+  }
+
+  favoriteMusic = async ({ target: { name } }) => {
+    this.setState({ isLoading: true });
+    await addSong(name);
+    this.setState({ isLoading: false });
   }
 
   render() {
-    const { albums, display } = this.state;
+    const { musics, display, isLoading } = this.state;
 
     return (
 
       <div data-testid="page-album">
         <h2>Album</h2>
         <Header />
-        { !albums ? (
+        { !musics ? (
           <Load />
         ) : (
           <section className="album-contain">
@@ -44,14 +53,23 @@ class Album extends Component {
               <p data-testid="album-name">{ display.collectionName }</p>
               <p data-testid="artist-name">{ display.artistName }</p>
             </div>
-            {albums.map((music, i) => (
-              <MusicCard
-                key={ i }
-                musicName={ music.trackName }
-                previewUrl={ music.previewUrl }
-              />
-            ))}
-            <Link to="/search">Voltar</Link>
+
+            { isLoading ? (
+              <Load />
+            ) : (
+              <div className="music-contain">
+                {musics.map((music, i) => (
+                  <MusicCard
+                    key={ i }
+                    musicName={ music.trackName }
+                    previewUrl={ music.previewUrl }
+                    favorite={ this.favoriteMusic }
+                    trackId={ music.trackId }
+                  />
+                ))}
+              </div>
+            )}
+            <Link to="/search" className="btn-back">Voltar</Link>
           </section>
         )}
 

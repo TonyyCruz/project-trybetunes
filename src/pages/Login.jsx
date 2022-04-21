@@ -9,13 +9,8 @@ class Login extends Component {
     this.state = {
       userName: '',
       loginButtonDisable: true,
-      // isLogin: false,
       isLoading: false,
     };
-  }
-
-  loadOff = () => {
-    this.setState({ isLoading: false });
   }
 
   ChangeState = ({ target }) => {
@@ -31,6 +26,7 @@ class Login extends Component {
     const { history } = this.props;
     this.setState({ isLoading: true });
     await createUser({ name: userName });
+    this.setState({ isLoading: false });
     history.push('/search');
   }
 
