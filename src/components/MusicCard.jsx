@@ -3,8 +3,14 @@ import PropTypes from 'prop-types';
 import '../pages/style.css';
 
 class MusicCard extends Component {
+  FavoriteCheck = () => {
+    const { myFavorites, trackId } = this.props;
+    const isFavorite = myFavorites.some((music) => Number(music) === trackId);
+    return isFavorite;
+  }
+
   render() {
-    const { musicName, previewUrl, favorite, trackId } = this.props;
+    const { musicName, previewUrl, favoriteAdd, trackId } = this.props;
     return (
 
       <div className="preview-box">
@@ -22,7 +28,8 @@ class MusicCard extends Component {
             data-testid={ `checkbox-music-${trackId}` }
             name={ trackId }
             type="checkbox"
-            onChange={ favorite }
+            onChange={ favoriteAdd }
+            checked={ this.FavoriteCheck() }
           />
         </label>
 
@@ -32,11 +39,16 @@ class MusicCard extends Component {
   }
 }
 
+MusicCard.defaultProps = {
+  myFavorites: [],
+};
+
 MusicCard.propTypes = {
   musicName: PropTypes.string.isRequired,
   previewUrl: PropTypes.string.isRequired,
-  favorite: PropTypes.func.isRequired,
+  favoriteAdd: PropTypes.func.isRequired,
   trackId: PropTypes.number.isRequired,
+  myFavorites: PropTypes.arrayOf(String),
 };
 
 export default MusicCard;
