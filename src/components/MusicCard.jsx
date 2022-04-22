@@ -5,7 +5,7 @@ import '../pages/style.css';
 class MusicCard extends Component {
   FavoriteCheck = () => {
     const { myFavorites, trackId } = this.props;
-    const isFavorite = myFavorites.some((music) => Number(music) === trackId);
+    const isFavorite = myFavorites.some((music) => Number(music.trackId) === trackId);
     return isFavorite;
   }
 

@@ -6,7 +6,7 @@ import getMusics from '../services/musicsAPI';
 import Load from './Load';
 import './style.css';
 import MusicCard from '../components/MusicCard';
-import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 
 class Album extends Component {
   constructor() {
@@ -24,17 +24,19 @@ class Album extends Component {
 
     const myFavorites = await getFavoriteSongs();
     const allMusics = await getMusics(id);
-    const musics = allMusics.filter((m, i) => i > 0);
-    console.log('didmount');
+    const musics = allMusics.filter((m, i) => i > 0); // As musicas estão a partir do index 1.
     this.setState({ musics });
-    this.setState({ display: allMusics[0] });
+    this.setState({ display: allMusics[0] }); // O index 0 Contem as informações.
     this.setState({ myFavorites });
     this.setState({ isLoading: false });
   }
 
-  AddFavoriteMusic = async ({ target: { name } }) => {
+  FavoriteControl = async ({ target: { name, checked } }) => {
     this.setState({ isLoading: true });
-    await addSong(name);
+
+    if (checked) { await addSong({ trackId: name }); }
+    if (!checked) { await removeSong({ trackId: name }); }
+
     const myFavorites = await getFavoriteSongs();
     this.setState({ myFavorites });
     this.setState({ isLoading: false });
@@ -42,7 +44,6 @@ class Album extends Component {
 
   render() {
     const { musics, display, isLoading, myFavorites } = this.state;
-    console.log('render');
     return (
 
       <div data-testid="page-album">
@@ -67,7 +68,7 @@ class Album extends Component {
                   key={ i }
                   musicName={ music.trackName }
                   previewUrl={ music.previewUrl }
-                  favoriteAdd={ this.AddFavoriteMusic }
+                  favoriteAdd={ this.FavoriteControl }
                   trackId={ music.trackId }
                   myFavorites={ myFavorites }
                 />
