@@ -19,6 +19,7 @@ class App extends React.Component {
             <Route path="/search" component={ Search } />
             <Route path="/favorites" component={ Favorites } />
             <Route path="/profile" component={ Profile } />
+            <Route path="/favorites" component={ Favorites } />
             <Route path="/album/:id" render={ (props) => <Album { ...props } /> } />
             <Route path="*" component={ NotFound } />
 
