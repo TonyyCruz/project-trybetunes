@@ -15,7 +15,7 @@ class CreateImage extends Component {
           placeholder={ description }
           onChange={ funct }
           data-testid={ test }
-          src={ value }
+          value={ value }
         />
       </label>
 
