@@ -22,7 +22,8 @@ class Favorites extends Component {
   FavoriteControl = async () => {
     const favoriteMusicsId = await getFavoriteSongs();
 
-    const favoriteMusics = await Promise.all( // Promise.all espera um grupo de promisses.
+    // Promise.all espera um grupo de promisses.
+    const favoriteMusics = await Promise.all(
       favoriteMusicsId.map(async (m) => {
         const music = await getMusics(m.trackId);
         return music[0];

@@ -3,14 +3,28 @@ import PropTypes from 'prop-types';
 import '../pages/style.css';
 
 class MusicCard extends Component {
+  constructor() {
+    super();
+    this.state = {
+      isChecked: '',
+    };
+  }
+
+  componentDidMount() {
+    const check = this.FavoriteCheck();
+    this.setState({ isChecked: check });
+  }
+
   FavoriteCheck = () => {
     const { myFavorites, trackId } = this.props;
+
     const isFavorite = myFavorites.some((music) => Number(music.trackId) === trackId);
     return isFavorite;
   }
 
   render() {
     const { trackName, previewUrl, favoriteFunction, trackId } = this.props;
+    const { isChecked } = this.state;
 
     return (
 
@@ -23,14 +37,14 @@ class MusicCard extends Component {
           <code>audio</code>
         </audio>
 
-        <label htmlFor="favotire">
+        <label htmlFor={ trackId }>
           Favorita
           <input
             data-testid={ `checkbox-music-${trackId}` }
             name={ trackId }
             type="checkbox"
             onChange={ favoriteFunction }
-            checked={ this.FavoriteCheck() }
+            checked={ isChecked }
           />
         </label>
 
