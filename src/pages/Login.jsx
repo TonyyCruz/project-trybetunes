@@ -2,36 +2,53 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Load from './Load';
 import { createUser } from '../services/userAPI';
+import './style.css';
+import CreateInput from '../components/CreateInput';
+import CreateTextarea from '../components/CreateTextarea';
+import CreateImage from '../components/CreateImage';
+import CreateButton from '../components/CreateButton';
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {
       userName: '',
+      userEmail: '',
+      userImage: '',
+      userDescription: '',
       loginButtonDisable: true,
       isLoading: false,
     };
   }
 
   ChangeState = ({ target }) => {
-    const three = 3;
     const { value, name } = target;
-    if (name === 'userName') { this.setState({ userName: value }); }
-    const btnCheck = value.length < three;
-    this.setState({ loginButtonDisable: btnCheck });
+    this.setState({ [name]: value }, () => {
+      const { userName } = this.state;
+      const buttonActive = userName.length > 2;
+      this.setState({ loginButtonDisable: !buttonActive });
+    });
   }
 
   logIn = async () => {
-    const { userName } = this.state;
+    const { userName, userEmail, userImage, userDescription } = this.state;
     const { history } = this.props;
     this.setState({ isLoading: true });
-    await createUser({ name: userName });
-    this.setState({ isLoading: false });
+
+    const user = {
+      name: userName,
+      email: userEmail,
+      image: userImage,
+      description: userDescription,
+    };
+
+    await createUser(user);
     history.push('/search');
   }
 
   render() {
-    const { loginButtonDisable, userName, isLoading } = this.state;
+    const { loginButtonDisable, userName, userEmail, userImage,
+      userDescription, isLoading } = this.state;
     return (
 
       isLoading ? (
@@ -42,22 +59,48 @@ class Login extends Component {
           <h1>Login</h1>
           <form action="">
 
-            <input
+            <CreateInput
               type="text"
-              data-testid="login-name-input"
+              test="login-name-input"
               value={ userName }
               name="userName"
-              onChange={ this.ChangeState }
-              placeholder="Nome do Usuario"
+              funct={ this.ChangeState }
+              description="Nome do Usuario"
             />
-            <button
-              type="button"
-              data-testid="login-submit-button"
-              disabled={ loginButtonDisable }
-              onClick={ this.logIn }
-            >
-              Entrar
-            </button>
+
+            <CreateInput
+              name="userEmail"
+              type="email"
+              description="E-Mail"
+              funct={ this.ChangeState }
+              // test="edit-input-email"
+              value={ userEmail }
+            />
+
+            <CreateTextarea
+              name="userDescription"
+              description="Descrição"
+              funct={ this.ChangeState }
+              // test="edit-input-description"
+              value={ userDescription }
+            />
+
+            <CreateImage
+              name="userImage"
+              type="text"
+              description="Imagem"
+              funct={ this.ChangeState }
+              // test="edit-input-image"
+              value={ userImage }
+            />
+
+            <CreateButton
+              name="btnLogin"
+              description="Entrar"
+              funct={ this.logIn }
+              test="login-submit-button"
+              btnDisable={ loginButtonDisable }
+            />
 
           </form>
         </div>

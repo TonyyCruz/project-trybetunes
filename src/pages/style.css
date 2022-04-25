@@ -1,7 +1,52 @@
 * {
+  background-color: antiquewhite;
   border: 0;
   margin: 0;
   padding: 0;
+}
+
+.link {
+  background-color: rgb(202, 205, 164);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px;
+  text-decoration: none;
+}
+
+.input {
+  background-color: white;
+  border: 2px solid;
+  border-color: rgb(177, 177, 177);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px;
+  width: 500px;
+}
+
+textarea {
+  background-color: white;
+  border: 2px solid;
+  border-color: rgb(177, 177, 177);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px;
+  width: 500px;
+}
+
+button {
+  background-color: rgb(181, 158, 128);
+  border: 3px solid;
+  border-radius: 10px;
+  padding: 4px;
+}
+
+form {
+  align-items: center;
+  border: 2px solid rgb(163, 163, 163);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 400px;
 }
 
 .load {
@@ -57,4 +102,8 @@
   margin: 10px;
   padding: 10px;
   text-align: center;
+}
+
+.profile, div {
+  margin: 20px;
 }

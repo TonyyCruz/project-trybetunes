@@ -10,12 +10,13 @@ class MusicCard extends Component {
   }
 
   render() {
-    const { musicName, previewUrl, favoriteAdd, trackId } = this.props;
+    const { trackName, previewUrl, favoriteFunction, trackId } = this.props;
+
     return (
 
       <div className="preview-box">
 
-        <p>{ musicName }</p>
+        <p>{ trackName }</p>
         <audio data-testid="audio-component" src={ previewUrl } controls>
           <track kind="captions" />
           O seu navegador não suporta o elemento
@@ -28,7 +29,7 @@ class MusicCard extends Component {
             data-testid={ `checkbox-music-${trackId}` }
             name={ trackId }
             type="checkbox"
-            onChange={ favoriteAdd }
+            onChange={ favoriteFunction }
             checked={ this.FavoriteCheck() }
           />
         </label>
@@ -44,9 +45,9 @@ MusicCard.defaultProps = {
 };
 
 MusicCard.propTypes = {
-  musicName: PropTypes.string.isRequired,
+  trackName: PropTypes.string.isRequired,
   previewUrl: PropTypes.string.isRequired,
-  favoriteAdd: PropTypes.func.isRequired,
+  favoriteFunction: PropTypes.func.isRequired,
   trackId: PropTypes.number.isRequired,
   myFavorites: PropTypes.arrayOf(String),
 };

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import Load from './Load';
 import './style.css';
@@ -48,7 +47,6 @@ class Album extends Component {
 
       <div data-testid="page-album">
         <h2>Album</h2>
-        <Header />
         { isLoading ? (
           <Load />
         ) : (
@@ -59,16 +57,13 @@ class Album extends Component {
               <p data-testid="artist-name">{ display.artistName }</p>
             </div>
 
-            {/* { isLoading ? (
-              <Load />
-            ) : ( */}
             <div className="music-contain">
               {musics.map((music, i) => (
                 <MusicCard
                   key={ i }
-                  musicName={ music.trackName }
+                  trackName={ music.trackName }
                   previewUrl={ music.previewUrl }
-                  favoriteAdd={ this.FavoriteControl }
+                  favoriteFunction={ this.FavoriteControl }
                   trackId={ music.trackId }
                   myFavorites={ myFavorites }
                 />

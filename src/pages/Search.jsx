@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 import Load from './Load';
-// import Album from './Album';
 import './style.css';
+import CreateInput from '../components/CreateInput';
+import CreateButton from '../components/CreateButton';
 
 class Search extends Component {
   constructor() {
@@ -47,28 +47,28 @@ class Search extends Component {
       ) : (
         <div data-testid="page-search">
           <h2>Search</h2>
-          <Header />
           { isLoading ? ( // condicional para esconder botao e input
             <p> </p>
           ) : (
             <form action="">
 
-              <input
+              <CreateInput
                 type="text"
-                data-testid="search-artist-input"
+                test="search-artist-input"
                 value={ findArtist }
                 name="findArtist"
-                onChange={ this.ChangeState }
-                placeholder="Nome do Artista"
+                funct={ this.ChangeState }
+                description="Nome do Artista"
               />
-              <button
-                type="button"
-                data-testid="search-artist-button"
-                disabled={ findButtonDisable }
-                onClick={ this.SearchArtist }
-              >
-                Procurar
-              </button>
+
+              <CreateButton
+                name="btnFind"
+                funct={ this.SearchArtist }
+                test="search-artist-button"
+                btnDisable={ findButtonDisable }
+                description="Procurar"
+              />
+
             </form>
           )}
           {artistName && (
