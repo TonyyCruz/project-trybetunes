@@ -107,3 +107,7 @@ form {
 .profile, div {
   margin: 20px;
 }
+
+.profile-image {
+  border: 3px solid black;
+}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import '../pages/style.css';
 
 class CreateImage extends Component {
   render() {
@@ -7,9 +8,9 @@ class CreateImage extends Component {
 
     return (
 
-      <label htmlFor={ name }>
+      <div>
         <input
-          className="input"
+          className="profile-image"
           name={ name }
           type={ type }
           placeholder={ description }
@@ -17,7 +18,7 @@ class CreateImage extends Component {
           data-testid={ test }
           value={ value }
         />
-      </label>
+      </div>
 
     );
   }
