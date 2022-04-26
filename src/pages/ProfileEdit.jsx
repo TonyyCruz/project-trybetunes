@@ -104,7 +104,7 @@ class ProfileEdit extends Component {
 
             <CreateButton
               name="btnEdite"
-              description="Editar"
+              description="Editar perfil"
               funct={ this.EditBtn }
               test="edit-button-save"
               btnDisable={ btnDisable }
