@@ -3,18 +3,6 @@ import PropTypes from 'prop-types';
 import '../pages/style.css';
 
 class MusicCard extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isChecked: '',
-    };
-  }
-
-  componentDidMount() {
-    const check = this.FavoriteCheck();
-    this.setState({ isChecked: check });
-  }
-
   FavoriteCheck = () => {
     const { myFavorites, trackId } = this.props;
 
@@ -24,7 +12,6 @@ class MusicCard extends Component {
 
   render() {
     const { trackName, previewUrl, favoriteFunction, trackId } = this.props;
-    const { isChecked } = this.state;
 
     return (
 
@@ -44,7 +31,7 @@ class MusicCard extends Component {
             name={ trackId }
             type="checkbox"
             onChange={ favoriteFunction }
-            checked={ isChecked }
+            checked={ this.FavoriteCheck() }
           />
         </label>
 

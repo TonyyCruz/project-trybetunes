@@ -22,11 +22,15 @@ class CreateTextarea extends Component {
   }
 }
 
+CreateTextarea.defaultProps = {
+  test: '',
+};
+
 CreateTextarea.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   funct: PropTypes.func.isRequired,
-  test: PropTypes.string.isRequired,
+  test: PropTypes.string,
   value: PropTypes.string.isRequired,
 };
 

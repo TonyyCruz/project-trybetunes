@@ -36,6 +36,7 @@ class Favorites extends Component {
 
   RemoveFavorite = async ({ target: { name } }) => {
     this.setState({ isLoading: true });
+
     await removeSong({ trackId: name });
     await this.FavoriteControl();
 

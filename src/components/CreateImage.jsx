@@ -24,12 +24,16 @@ class CreateImage extends Component {
   }
 }
 
+CreateImage.defaultProps = {
+  test: '',
+};
+
 CreateImage.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   funct: PropTypes.func.isRequired,
-  test: PropTypes.string.isRequired,
+  test: PropTypes.string,
   value: PropTypes.string.isRequired,
 };
 
