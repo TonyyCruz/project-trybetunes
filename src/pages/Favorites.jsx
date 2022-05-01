@@ -34,12 +34,21 @@ class Favorites extends Component {
     this.setState({ favoriteMusics });
   }
 
-  RemoveFavorite = async ({ target: { name } }) => {
+  RemoveFavorite = ({ target: { name } }) => {
     this.setState({ isLoading: true });
+    const { favoriteMusicsId, favoriteMusics } = this.state;
 
-    await removeSong({ trackId: name });
-    await this.FavoriteControl();
+    const newFavoritId = favoriteMusicsId.filter((ids) => (
+      ids.trackId !== name));
+    const newFavoritMusics = favoriteMusics.filter((msc) => (
+      msc.trackId !== name));
 
+    this.setState({
+      favoriteMusicsId: newFavoritId,
+      favoriteMusics: newFavoritMusics,
+    });
+    removeSong({ trackId: name });
+    this.FavoriteControl(); // não deveria precisar...
     this.setState({ isLoading: false });
   }
 
