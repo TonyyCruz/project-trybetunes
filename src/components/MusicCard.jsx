@@ -6,7 +6,8 @@ class MusicCard extends Component {
   FavoriteCheck = () => {
     const { myFavorites, trackId } = this.props;
 
-    const isFavorite = myFavorites.some((music) => Number(music.trackId) === trackId);
+    const isFavorite = myFavorites.some((f) => (
+      Number(f.trackId) === trackId));
     return isFavorite;
   }
 
@@ -25,14 +26,15 @@ class MusicCard extends Component {
         </audio>
 
         <label htmlFor={ trackId }>
-          Favorita
           <input
             data-testid={ `checkbox-music-${trackId}` }
             name={ trackId }
             type="checkbox"
             onChange={ favoriteFunction }
             checked={ this.FavoriteCheck() }
+            id={ trackId }
           />
+          Favorita
         </label>
 
       </div>

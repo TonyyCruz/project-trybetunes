@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Load from './Load';
 import { getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
-import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
 
 class Favorites extends Component {
@@ -9,52 +8,33 @@ class Favorites extends Component {
     super();
     this.state = {
       isLoading: true,
-      favoriteMusicsId: '',
       favoriteMusics: '',
     };
   }
 
   async componentDidMount() {
-    await this.FavoriteControl();
-    this.setState({ isLoading: false });
-  }
-
-  FavoriteControl = async () => {
-    const favoriteMusicsId = await getFavoriteSongs();
-
-    // Promise.all espera um grupo de promisses.
-    const favoriteMusics = await Promise.all(
-      favoriteMusicsId.map(async (m) => {
-        const music = await getMusics(m.trackId);
-        return music[0];
-      }),
-    );
-
-    this.setState({ favoriteMusicsId });
-    this.setState({ favoriteMusics });
+    const favoriteMusics = await getFavoriteSongs();
+    this.setState({
+      favoriteMusics,
+    }, () => this.setState({ isLoading: false }));
+    console.log(favoriteMusics);
   }
 
   RemoveFavorite = async ({ target: { name } }) => {
+    const { favoriteMusics } = this.state;
     this.setState({ isLoading: true });
-    // const { favoriteMusicsId, favoriteMusics } = this.state;
-
-    // const newFavoritId = favoriteMusicsId.filter((ids) => (
-    //   ids.trackId !== name));
-    // const newFavoritMusics = favoriteMusics.filter((msc) => (
-    //   msc.trackId !== name));
-
-    // this.setState({
-    //   favoriteMusicsId: newFavoritId,
-    //   favoriteMusics: newFavoritMusics,
-    // });
-
     await removeSong({ trackId: name });
-    await this.FavoriteControl();
-    this.setState({ isLoading: false });
+
+    const newFavorite = favoriteMusics.filter((msc) => (
+      msc.trackId !== Number(name)));
+
+    this.setState({
+      favoriteMusics: newFavorite,
+    }, () => this.setState({ isLoading: false }));
   }
 
   render() {
-    const { isLoading, favoriteMusics, favoriteMusicsId } = this.state;
+    const { isLoading, favoriteMusics } = this.state;
 
     return (
       <div data-testid="page-favorites">
@@ -67,7 +47,7 @@ class Favorites extends Component {
               previewUrl={ music.previewUrl }
               favoriteFunction={ this.RemoveFavorite }
               trackId={ music.trackId }
-              myFavorites={ favoriteMusicsId }
+              myFavorites={ favoriteMusics }
             />
           ))
         )}

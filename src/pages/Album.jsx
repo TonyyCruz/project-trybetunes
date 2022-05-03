@@ -32,13 +32,22 @@ class Album extends Component {
 
   FavoriteControl = async ({ target: { name, checked } }) => {
     this.setState({ isLoading: true });
+    const { myFavorites, musics } = this.state;
 
-    if (checked) { await addSong({ trackId: name }); }
-    if (!checked) { await removeSong({ trackId: name }); }
+    if (checked) {
+      const newMusic = musics.find((m) => m.trackId === Number(name));
+      this.setState((state) => ({
+        myFavorites: [...state.myFavorites, { ...newMusic }] }));
+      await addSong({ ...newMusic });
+      this.setState({ isLoading: false });
+    }
 
-    const myFavorites = await getFavoriteSongs();
-    this.setState({ myFavorites });
-    this.setState({ isLoading: false });
+    if (!checked) {
+      const newFavorites = myFavorites.filter((f) => f.trackId !== Number(name));
+      this.setState({ myFavorites: newFavorites });
+      await removeSong({ trackId: name });
+      this.setState({ isLoading: false });
+    }
   }
 
   render() {
@@ -68,8 +77,8 @@ class Album extends Component {
                   myFavorites={ myFavorites }
                 />
               ))}
+
             </div>
-            {/* )} */}
             <Link to="/search" className="btn-back">Voltar</Link>
           </section>
         )}
